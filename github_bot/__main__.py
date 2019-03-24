@@ -28,7 +28,7 @@ async def on_issue_comment_created(
         action, issue, comment, repository, sender, installation,
         assignee=None, changes=None,
 ):
-    github_api = RUNTIME_CONTEXT.app_instalation_client
+    github_api = RUNTIME_CONTEXT.app_installation_client
     comment_api_url = f'{comment["url"]}/reactions'
 
     await github_api.post(
