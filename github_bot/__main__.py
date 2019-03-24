@@ -21,6 +21,23 @@ async def on_issue_opened(
     await github_api.post(comments_api_url, data={'body': message})
 
 
+@process_event_actions('issue_comment', {'created'})
+@process_webhook_payload
+async def on_issue_comment_created(
+        *,
+        action, issue, comment, repository, sender, installation,
+        assignee=None, changes=None,
+):
+    github_api = RUNTIME_CONTEXT.app_instalation_client
+    comment_api_url = f'{comment["url"]}/reactions'
+
+    await github_api.post(
+        comment_api_url,
+        preview_api_version='squirrel-girl',
+        data={'content': '+1'},
+    )
+
+
 if __name__ == '__main__':
     run_app(
         name='Comment-Reactor-PyconSK-by-iref',
