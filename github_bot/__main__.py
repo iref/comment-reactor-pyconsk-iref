@@ -44,7 +44,6 @@ async def on_pr_check_wip(
         *,
         action, number, pull_request,
         repository, sender,
-        organization,
         installation,
         **kwargs,
 ):
