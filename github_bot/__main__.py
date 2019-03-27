@@ -51,7 +51,6 @@ async def on_pr_check_wip(
 
     Send a status update to GitHub via Checks API.
     """
-    print(f"Starting PR check handler {pull_request}")
     github_api = RUNTIME_CONTEXT.app_installation_client
 
     pr_head_branch = pull_request['head']['ref']
@@ -60,7 +59,6 @@ async def on_pr_check_wip(
 
     check_runs_base_uri = f'{repo_url}/check-runs'
 
-    print(f"Creating new check {check_runs_base_uri}, branch: {pr_head_branch}, sha: {pr_head_sha}, repo: {repo_url}")
     resp = await github_api.post(
         check_runs_base_uri,
         preview_api_version='antiope',
@@ -77,7 +75,7 @@ async def on_pr_check_wip(
         f'{check_runs_base_uri}/{resp["id"]:d}'
     )
 
-    print(f"Get check update")
+    print(f"Update check status: {check_runs_updates_uri}")
     resp = await github_api.patch(
         check_runs_updates_uri,
         preview_api_version='antiope',
